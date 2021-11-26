@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+
+body{
+	background-color: #13073A;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+.container-fluid{
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.navbar{
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+	background-color: #D4D46A !important;
+}
+.navbar li a{
+	text-decoration: none !important;
+	color: black !important;
+}
+.navbar li a:hover{
+	color: darkgrey !important;
+}
+
+.navbar-brand a{
+	text-decoration: none !important;
+	color: black !important;
+}
