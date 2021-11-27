@@ -5,32 +5,44 @@
     import { navigate } from "svelte-routing";
     import { Router, Link, Route } from "svelte-routing";
     import Line from "svelte-chartjs/src/Line.svelte";
+    import { get } from 'svelte/store'
+    import { preferences } from './stores.ts'
 
     let orders = [];
 
     onMount(() => {
+        
+        user.setUser({
+            email: get(preferences)
+        })
+        
         if (!$user) {
+            console.log('1')
             navigate("/", { replace: true });
-        }
-        console.log($user);
+        }else{
+            console.log('2');
+            user.setUser({
+                email: get(preferences)
+            });
 
-        fetch("http://localhost:3000/orders?orderer=" + $user.email, {
+            fetch("http://localhost:3000/orders?orderer=" + get(preferences), {
             method: "GET",
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 orders = data;
             })
             .catch((error) => {
                 console.log(error);
                 return [];
             });
+        }
+
+        
     });
 
-    function solicitarCancelacion(order){
-        console.log(order);
-        navigate('/cancelar');
+    function solicitarCancelacion(order) {
+        navigate("/cancelar");
     }
 
     function randomNumber(min, max) {
@@ -83,60 +95,74 @@
             <h5>Tus campañas activas</h5>
             <hr />
             <div class="orders-holder">
-                {#each orders as order}
-                    <div class="order-holder">
-                        <div class="order-info">
-                            <div class="order-info-section">
-                                <div class="order-info-item">
-                                    <label for="">Título: </label><span
-                                        >{order.orderName}</span
+                {#if orders.length != 0}
+                    {#each orders as order}
+                        <div class="order-holder">
+                            <div class="order-info">
+                                <div class="order-info-section">
+                                    <div class="order-info-item">
+                                        <label for="">Título: </label><span
+                                            >{order.orderName}</span
+                                        >
+                                    </div>
+                                    <div class="order-info-item">
+                                        <label for="">Presupuesto: </label><span
+                                            >{order.budget} €</span
+                                        >
+                                    </div>
+                                    <div class="order-info-item">
+                                        <label for=""
+                                            >Fecha de inicio:
+                                        </label><span>{order.initDate}</span>
+                                    </div>
+                                    <div class="order-info-item">
+                                        <label for=""
+                                            >Fecha de finalización:
+                                        </label><span>{order.endDate}</span>
+                                    </div>
+                                </div>
+                                <div class="order-info-section">
+                                    <div class="order-info-item">
+                                        <label for="">Estado: </label><span
+                                            style="color:lime">En marcha</span
+                                        >
+                                    </div>
+                                    <div class="order-info-item">
+                                        <label for=""
+                                            >Personas alcanzadas:
+                                        </label><span
+                                            >{randomNumber(200, 10000)}</span
+                                        >
+                                    </div>
+                                    <div class="order-info-item">
+                                        <label for=""
+                                            >Clicks en el anuncio:
+                                        </label><span
+                                            >{randomNumber(50, 200)}</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="order-info-section">
+                                    <Line
+                                        data={newDataLine()}
+                                        options={{ responsive: true }}
+                                    />
+                                </div>
+                                <div class="order-info-section">
+                                    <button
+                                        on:click={solicitarCancelacion(
+                                            order.id
+                                        )}
+                                        class="btn btn-primary btn-jesus"
+                                        >Solicitar cancelación</button
                                     >
                                 </div>
-                                <div class="order-info-item">
-                                    <label for="">Presupuesto: </label><span
-                                        >{order.budget} €</span
-                                    >
-                                </div>
-                                <div class="order-info-item">
-                                    <label for="">Fecha de inicio: </label><span
-                                        >{order.initDate}</span
-                                    >
-                                </div>
-                                <div class="order-info-item">
-                                    <label for=""
-                                        >Fecha de finalización:
-                                    </label><span>{order.endDate}</span>
-                                </div>
-                            </div>
-                            <div class="order-info-section">
-                                <div class="order-info-item">
-                                    <label for="">Estado: </label><span
-                                        style="color:lime">En marcha</span
-                                    >
-                                </div>
-                                <div class="order-info-item">
-                                    <label for=""
-                                        >Personas alcanzadas:
-                                    </label><span>{randomNumber(200, 10000)}</span>
-                                </div>
-                                <div class="order-info-item">
-                                    <label for=""
-                                        >Clicks en el anuncio:
-                                    </label><span>{randomNumber(50, 200)}</span>
-                                </div>
-                            </div>
-                            <div class="order-info-section">
-                                <Line
-                                    data={newDataLine()}
-                                    options={{ responsive: true }}
-                                />
-                            </div>
-                            <div class="order-info-section">
-                                <button on:click="{solicitarCancelacion(order.id)}" class="btn btn-primary btn-jesus">Solicitar cancelación</button>
                             </div>
                         </div>
-                    </div>
-                {/each}
+                    {/each}
+                    {:else}
+                    <p>Aún no tienes ninguna campaña activa.</p>
+                {/if}
             </div>
         </div>
     </div>
@@ -169,13 +195,13 @@
         border-bottom: 1px solid rgb(202, 202, 202);
     }
     .dashboard-holder {
-        background-color: #FAFAFA;
+        background-color: #fafafa;
         width: 75vw;
         margin: auto;
         margin-top: 5vh;
         padding: 15px;
     }
-    .btn-jesus{
+    .btn-jesus {
         background-color: rgba(254, 44, 85, 1);
         color: white;
         border-radius: 25px;
@@ -183,7 +209,7 @@
         border: none;
         margin-top: 15px;
     }
-    .btn-jesus:hover{
+    .btn-jesus:hover {
         background-color: rgb(202, 38, 71);
     }
 </style>

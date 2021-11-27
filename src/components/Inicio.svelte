@@ -8,11 +8,15 @@
         <p class="main-desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit tempore fugiat perferendis aliquid, numquam saepe quo odio nobis sunt! Quisquam atque quod obcaecati laborum quia ab nam voluptas ea praesentium?</p>
         <br>
         <p class="subtext">Regístrate hoy y crea un anuncio en tan solo unos minutos</p>
-        <button class="register-btn">Registrarme</button>
+        <a href="#registro"><button class="register-btn">Registrarme</button></a>
+        
     </div>
+    <a id="registro"></a>
     <div class="section second">
+        
         <div class="registro-holder">
             <div class="form-holder">
+                
             <h3>Registro</h3>
                 <div class="form-item">
                     <label for="">Nombre</label>

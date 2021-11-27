@@ -1,6 +1,11 @@
 <script>
     import { user } from "../models/User";
     import { navigate } from "svelte-routing";
+    import { get } from 'svelte/store'
+    import { preferences } from './stores.ts'
+    import { getNotificationsContext } from "svelte-notifications";
+
+    const { addNotification } = getNotificationsContext();
 
     let email = "";
     let password = "";
@@ -18,19 +23,46 @@
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log('login correcto');
                 console.log(data);
-                user.setUser({
-                    email,
-                    password,
-                });
-                navigate("/dashboard", { replace: true });
+                if(data == 'Incorrect password' || data == 'Password is too short'){
+                    addNotification({
+                        text: "Usuario o contraseña incorrectos.",
+                        position: "top-right",
+                        type: "danger",
+                        removeAfter: 2000,
+                    });
+                }else if (data == 'Cannot find user'){
+                    addNotification({
+                        text: "Usuario no encontrado.",
+                        position: "top-right",
+                        type: "danger",
+                        removeAfter: 2000,
+                    });
+                }else if (data == 'Email and password are required'){
+                    addNotification({
+                        text: "Introduce un usuario y contraseña.",
+                        position: "top-right",
+                        type: "danger",
+                        removeAfter: 2000,
+                    });
+                }else{
+                    user.setUser({
+                        email,
+                        password,
+                    });
+                    preferences.set(email);
+                    navigate("/dashboard", { replace: true });
+                }
             })
             .catch((error) => {
+                console.log('login incorrecto');
                 console.log(error);
                 return [];
             });
     }
 </script>
+
 <div class="container-fluid">
     <div class="section">
         <div class="login-holder">
@@ -47,7 +79,9 @@
                         />
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
+                        <label for="password" class="form-label"
+                            >Contraseña</label
+                        >
                         <input
                             bind:value={password}
                             type="password"
@@ -64,11 +98,11 @@
 </div>
 
 <style>
-    label{
-        font-family: 'Nunito';
+    label {
+        font-family: "Nunito";
         color: white;
     }
-    input{
+    input {
         border-radius: 15px;
         padding: 5px 10px;
     }
@@ -83,12 +117,12 @@
         background-color: #13073a;
         height: 100vh;
     }
-    .section{
+    .section {
         background-color: white;
         width: 100%;
         height: 100vh;
     }
-    .btn-jesus{
+    .btn-jesus {
         background-color: rgba(254, 44, 85, 1);
         border: 0px;
         border-radius: 25px;

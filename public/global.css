@@ -5,6 +5,7 @@ body{
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
+	font-family: 'Nunito';
 }
 .container-fluid{
 	padding-left: 0 !important;

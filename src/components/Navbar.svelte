@@ -2,9 +2,12 @@
     import { Router, Link, Route } from "svelte-routing";
     import { user } from "../models/User";
     import { navigate } from "svelte-routing";
+    import { get } from 'svelte/store'
+    import { preferences } from './stores.ts'
 
     const cerrarSesion = () => {
         user.setUser(null);
+        preferences.set();
         navigate("/", { replace: true });
     };
 </script>
@@ -26,7 +29,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><Link to="/servicios">Servicios</Link></a>
+                    <a class="nav-link" href="#"><Link to="/servicios/iniciar-pedido">Publicitarse</Link></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><Link to="/soporte">Soporte</Link></a>

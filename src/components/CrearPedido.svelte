@@ -246,7 +246,7 @@
         margin-left: 15px;
     }
     .pago-holder {
-        padding: 15px;
+        padding: 35px;
         width: 100%;
     }
     .dates-input-group {
@@ -263,6 +263,6 @@
         background-color: #FAFAFA;
         width: 40vw;
         margin: auto;
-        padding: 15px;
+        padding: 35px;
     }
 </style>

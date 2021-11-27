@@ -2,7 +2,6 @@
 	import { Router, Link, Route } from "svelte-routing";
 	import Login from "./components/Login.svelte";
 	import Dashboard from "./components/Dashboard.svelte";
-	import Servicios from "./components/Servicios.svelte";
 	import CrearPedido from "./components/CrearPedido.svelte";
 	import Notifications from "svelte-notifications";
 	import Soporte from "./components/Soporte.svelte";
@@ -23,9 +22,6 @@
 				</Route>
 				<Route path="/dashboard">
 					<Dashboard />
-				</Route>
-				<Route path="/servicios">
-					<Servicios />
 				</Route>
 				<Route path="/servicios/iniciar-pedido">
 					<CrearPedido />

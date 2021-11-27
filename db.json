@@ -9,6 +9,11 @@
       "email": "testUser@test.com",
       "password": "$2a$10$Beh3jSgyvWZiqIQEj6Xg3u9UF1VvF652MW6dm6W98Vqm7Frg5znqi",
       "id": 2
+    },
+    {
+      "email": "test@test.com",
+      "password": "$2a$10$VuPuSE2pnTphdwW1kjCV/.YTprea3MVP40ccHhNR90hbcGTcSANQi",
+      "id": 3
     }
   ],
   "orders": [
@@ -138,6 +143,22 @@
       "endDate": "2021-11-19",
       "orderer": "dsa@asd.asd",
       "id": 17
+    },
+    {
+      "orderName": "asddas",
+      "budget": 11132,
+      "initDate": "2021-11-26",
+      "endDate": "2021-11-28",
+      "orderer": "test@test.com",
+      "id": 18
+    },
+    {
+      "orderName": "sad",
+      "budget": 123,
+      "initDate": "2021-11-08",
+      "endDate": "2021-11-28",
+      "orderer": "test@test.com",
+      "id": 19
     }
   ]
 }
