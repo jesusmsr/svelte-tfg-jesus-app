@@ -11,7 +11,6 @@
     let orders = [];
 
     onMount(() => {
-        
         user.setUser({
             email: get(preferences)
         })
@@ -30,6 +29,7 @@
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 orders = data;
             })
             .catch((error) => {
@@ -42,7 +42,7 @@
     });
 
     function solicitarCancelacion(order) {
-        navigate("/cancelar");
+        navigate("/cancelar?order="+order.id);
     }
 
     function randomNumber(min, max) {
@@ -151,7 +151,7 @@
                                 <div class="order-info-section">
                                     <button
                                         on:click={solicitarCancelacion(
-                                            order.id
+                                            order
                                         )}
                                         class="btn btn-primary btn-jesus"
                                         >Solicitar cancelación</button
